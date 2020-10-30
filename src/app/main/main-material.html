@@ -1,0 +1,40 @@
+<div id="main-app" class="app sidebar-color-dark header-color-dark" [dir]="layout"
+     [ngClass]="{'app-dark': dark, 'collapsed-sidebar': coreService.collapseSidebar, 'compact-sidebar': compactSidebar, 'customizer-in': customizerIn}"
+     [class.side-panel-opened]="coreService.sidenavOpen" [class.side-panel-closed]="!coreService.sidenavOpen">
+    <mat-sidenav-container class="gene-container">
+        <mat-sidenav #sidenav [(mode)]="coreService.sidenavMode" [(opened)]="coreService.sidenavOpen"
+                     class="sidebar-area">
+            <ms-side-bar [menuList]="menuItems" [verticalMenuStatus]=true></ms-side-bar>
+        </mat-sidenav>
+        <mat-toolbar class="gene-header-toolbar">
+            <div class="gene-ham-icon">
+                <button class="" mat-mini-fab color="primary" mat-card-icon (click)="toggleSidebar()">
+                    <mat-icon>menu</mat-icon>
+                </button>
+            </div>
+
+            <a class="navbar-brand">{{header}}</a>
+<!--                        <breadcrumb class="gene-breadcrumbs"></breadcrumb>-->
+
+            <span fxFlex></span>
+
+            <div class="secondary-menu">
+                <button fxHide="true" fxHide.gt-sm="false" mat-button class="fullscreen-toggle" *ngIf="this.getProject()"
+                        (click)="addNewProjectDialog()">
+                    <mat-icon>create_new_folder</mat-icon>
+                </button>
+                <button fxHide="true" fxHide.gt-sm="false" mat-button class="fullscreen-toggle" (click)="onSync()" *ngIf="this.getSinc()">
+                    <mat-icon svgIcon="cloud-download" aria-label="Sincronizar projetos" class="img-svg"></mat-icon>
+                </button>
+            </div>
+
+
+        </mat-toolbar>
+        <div class="gene-base-container" #scrollContainer>
+            <div class="inner-container" fxLayout="row wrap">
+                <div class="full-wid" fxFlex="100">
+                    <router-outlet (activate)="onActivate($event, scrollContainer)"></router-outlet>
+                </div>
+            </div>
+        </div>
+    </mat-sidenav-container>

@@ -1,0 +1,548 @@
+<button mat-button mat-button-sm class="btn-back" (click)="onQuestion()">
+    <mat-icon class="img-svg-sm" svgIcon="arrow-left"></mat-icon>
+    Voltar
+</button>
+
+
+
+<mat-card>
+    <mat-tab-group headerPosition="below" mat-align-tabs="center">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">format_list_bulleted</mat-icon>
+            </ng-template>
+            <ms-desifnacao-form></ms-desifnacao-form>
+        </mat-tab>
+        <mat-tab>
+
+            <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon" svgIcon="layers-triple"></mat-icon>
+            </ng-template>
+
+            <mat-tab-group headerPosition="below" mat-align-tabs="center" [color]="" [backgroundColor]="">
+                <mat-tab>
+                    <ng-template mat-tab-label
+                                 style="display: block !important; top: 12px !important; position: relative !important;">
+                        <mat-icon class="example-tab-icon" svgIcon="format-line-style"></mat-icon>
+                        <p>Morfológica</p>
+                    </ng-template>
+                    <mat-tab-group mat-align-tabs="center">
+
+                        <mat-tab *ngFor="let horizonsQuestionsType of horizonsQuestionsTypes"
+                                 label="{{horizonsQuestionsType.label}}">
+                            <form>
+                                <div fxLayout='row'>
+                                    <div *ngFor="let horizon of horizonslist; let i = index" fxLayout="column"
+                                         fxFlex.xs="50"
+                                         fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+
+                                        <!--type 1 -->
+                                        <mat-form-field class="fill"
+                                                        *ngIf="horizonsQuestionsType.inputType === 1">
+                                            <mat-label
+                                                    *ngIf="horizonsQuestionsType.metric">{{horizon.name + ' (' + horizonsQuestionsType.metric + ')'}}</mat-label>
+                                            <mat-label
+                                                    *ngIf="!horizonsQuestionsType.metric">{{horizon.name}}</mat-label>
+                                            <input *ngIf="!horizonsQuestionsType.editable" matInput disabled
+                                                   maxlength="horizonsQuestionsType.maxLength"
+                                                   type="{{horizonsQuestionsType.keyboardType}}"
+                                                   (blur)="onHorizon(horizon,horizonsQuestionsType)"
+                                                   id="{{horizonsQuestionsType.name+' '+horizon.idRealm}}"
+                                                   value="{{horizonsQuestionsType.values[horizon.idRealm]['answer'].value}}"
+                                                   name="{{horizonsQuestionsType.name+' '+horizon.idRealm}}">
+
+                                            <input *ngIf="horizonsQuestionsType.editable" matInput
+                                                   maxlength="horizonsQuestionsType.maxLength"
+                                                   type="{{horizonsQuestionsType.keyboardType}}"
+                                                   (blur)="onHorizon(horizon,horizonsQuestionsType)"
+                                                   id="{{horizonsQuestionsType.name+' '+horizon.idRealm}}"
+                                                   value="{{horizonsQuestionsType.values[horizon.idRealm]['answer'].value}}"
+                                                   name="{{horizonsQuestionsType.name+' '+horizon.idRealm}}">
+
+
+                                        </mat-form-field>
+                                        <!--type 1 -->
+
+
+                                        <!-- Inicia tipo 2 -->
+                                        <mat-form-field class="full-wid"
+                                                        *ngIf="horizonsQuestionsType.inputType === 2">
+                                            <mat-label
+                                                    *ngIf="horizonsQuestionsType.metric">{{horizon.name + ' (' + horizonsQuestionsType.metric + ')'}}</mat-label>
+                                            <mat-label
+                                                    *ngIf="!horizonsQuestionsType.metric">{{horizon.name}}</mat-label>
+
+                                            <mat-select id="{{horizonsQuestionsType.name+' '+horizon.idRealm}}"
+                                                        (selectionChange)="onHorizon(horizon,horizonsQuestionsType)">
+                                                <mat-option *ngFor="let item of horizonsQuestionsType.items"
+                                                            [value]="item.value">
+                                                    {{item.label}}
+                                                </mat-option>
+                                            </mat-select>
+
+
+                                        </mat-form-field>
+                                        <!-- Fim tipo 2 -->
+
+
+                                        <!-- Inicio tipo 3 -->
+                                        <mat-form-field class="full-wid"
+                                                        *ngIf="horizonsQuestionsType.inputType === 3">
+                                            <mat-label
+                                                    *ngIf="horizonsQuestionsType.metric">{{horizon.name + ' (' + horizonsQuestionsType.metric + ')'}}</mat-label>
+                                            <mat-label
+                                                    *ngIf="!horizonsQuestionsType.metric">{{horizon.name}}</mat-label>
+                                            <textarea matInput placeholder="{{horizonsQuestionsType.placeholder}}"
+                                                      type="text"
+                                                      (blur)="onHorizon(horizon,horizonsQuestionsType)"
+                                                      id="{{horizonsQuestionsType.name+' '+horizon.idRealm}}"
+                                                      value="{{horizonsQuestionsType.values[horizon.idRealm]['answer'].value}}"
+                                                      name="{{horizonsQuestionsType.name+' '+horizon.idRealm}}"></textarea>
+                                        </mat-form-field>
+                                        <!-- Finaliza tipo 3 -->
+
+
+                                        <!--type 4 -->
+                                        <div fxLayout='row' *ngIf="horizonsQuestionsType.inputType === 4">
+                                            <div fxLayout="column" fxFlex.xs="50"
+                                                 fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                                                <mat-checkbox
+                                                        [checked]="horizonsQuestionsType.values[horizon.idRealm]['answer']['value']['mosqueado']"
+                                                        id="{{horizonsQuestionsType.type+' '+horizon.idRealm+' mosqueado'}}"
+                                                        (change)="onMosqueadoVariegado($event,horizonsQuestionsType,horizon,'mosqueado')"
+                                                >
+                                                    Mosqueado
+                                                </mat-checkbox>
+                                            </div>
+                                            <div *ngIf="horizonsQuestionsType.variegado" fxLayout="column"
+                                                 fxFlex.xs="50"
+                                                 fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                                                <mat-checkbox
+                                                        [checked]="horizonsQuestionsType.values[horizon.idRealm]['answer']['value']['variegado']"
+                                                        id="{{horizonsQuestionsType.type+' '+horizon.idRealm+' variegado'}}"
+                                                        (change)="onMosqueadoVariegado($event,horizonsQuestionsType,horizon, 'variegado')">
+                                                    Variegado
+                                                </mat-checkbox>
+                                            </div>
+                                        </div>
+
+                                        <div fxLayout='row' *ngIf="horizonsQuestionsType.inputType === 4">
+                                            <div fxLayout="column" fxFlex.xs="33.33"
+                                                 fxFlex.sm="33.33" fxFlex.md="33.33" fxFlex.lg="33.33"
+                                                 fxFlex.xl="33.33">
+
+                                                <mat-form-field appearance="fill"
+                                                >
+                                                    <input matInput
+                                                           (blur)="onHorizon(horizon,horizonsQuestionsType,'matiz')"
+                                                           value="{{horizonsQuestionsType.values[horizon.idRealm]['answer']['value']['matiz']}}"
+                                                           id="{{horizonsQuestionsType.name+' '+horizon.idRealm+' matiz'}}"
+                                                           name="{{horizonsQuestionsType.name+' '+horizon.idRealm+' matiz'}}">
+                                                    <mat-hint>Matiz</mat-hint>
+                                                </mat-form-field>
+                                            </div>
+                                            <div fxLayout="column" fxFlex.xs="33.33"
+                                                 fxFlex.sm="33.33" fxFlex.md="33.33" fxFlex.lg="33.33"
+                                                 fxFlex.xl="33.33">
+
+                                                <mat-form-field appearance="fill">
+                                                    <input matInput
+                                                           type="{{horizonsQuestionsType.keyboardType}}"
+                                                           ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01"
+                                                           (blur)="onHorizon(horizon,horizonsQuestionsType,'value')"
+                                                           value="{{horizonsQuestionsType.values[horizon.idRealm]['answer']['value']['value']}}"
+                                                           id="{{horizonsQuestionsType.name+' '+horizon.idRealm+' value'}}"
+                                                           name="{{horizonsQuestionsType.name+' '+horizon.idRealm+' value'}}">
+                                                    <mat-hint>Valor</mat-hint>
+                                                </mat-form-field>
+                                            </div>
+                                            <div fxLayout="column" fxFlex.xs="33.33"
+                                                 fxFlex.sm="33.33" fxFlex.md="33.33" fxFlex.lg="33.33"
+                                                 fxFlex.xl="33.33">
+
+                                                <mat-form-field appearance="fill">
+                                                    <input matInput
+                                                           type="{{horizonsQuestionsType.keyboardType}}"
+                                                           ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01"
+                                                           (blur)="onHorizon(horizon,horizonsQuestionsType,'croma')"
+                                                           value="{{horizonsQuestionsType.values[horizon.idRealm]['answer']['value']['croma']}}"
+                                                           id="{{horizonsQuestionsType.name+' '+horizon.idRealm+' croma'}}"
+                                                           name="{{horizonsQuestionsType.name+' '+horizon.idRealm+' croma'}}">
+                                                    <mat-hint>Croma</mat-hint>
+                                                </mat-form-field>
+
+
+                                            </div>
+                                        </div>
+
+
+                                        <!-- Variegado -->
+                                        <div fxLayout='row'
+                                             *ngIf="horizonsQuestionsType.values[horizon.idRealm]['answer']['value']['variegado']">
+                                            <div fxLayout="column" fxFlex.xs="33.33"
+                                                 fxFlex.sm="33.33" fxFlex.md="33.33" fxFlex.lg="33.33"
+                                                 fxFlex.xl="33.33">
+                                                <mat-form-field appearance="fill">
+                                                    <input matInput
+                                                           (blur)="onHorizon(horizon,horizonsQuestionsType,'varMatiz_1')"
+                                                           id="{{horizonsQuestionsType.name+' '+horizon.idRealm+' varMatiz_1'}}"
+                                                           value="{{horizonsQuestionsType.values[horizon.idRealm]['answer']['value']['varMatiz_1']}}"
+                                                           name="{{horizonsQuestionsType.name+' '+horizon.idRealm+' varMatiz_1'}}">
+                                                    <mat-hint>Matiz</mat-hint>
+                                                </mat-form-field>
+                                            </div>
+                                            <div fxLayout="column" fxFlex.xs="33.33"
+                                                 fxFlex.sm="33.33" fxFlex.md="33.33" fxFlex.lg="33.33"
+                                                 fxFlex.xl="33.33">
+
+                                                <mat-form-field appearance="fill">
+                                                    <input matInput
+                                                           type="number"
+                                                           ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01"
+                                                           (blur)="onHorizon(horizon,horizonsQuestionsType,'varMValue_1')"
+                                                           id="{{horizonsQuestionsType.name+' '+horizon.idRealm+' varMValue_1'}}"
+                                                           value="{{horizonsQuestionsType.values[horizon.idRealm]['answer']['value']['varMValue_1']}}"
+                                                           name="{{horizonsQuestionsType.name+' '+horizon.idRealm+' varMValue_1'}}">
+                                                    <mat-hint>Valor</mat-hint>
+                                                </mat-form-field>
+                                            </div>
+                                            <div fxLayout="column" fxFlex.xs="33.33"
+                                                 fxFlex.sm="33.33" fxFlex.md="33.33" fxFlex.lg="33.33"
+                                                 fxFlex.xl="33.33">
+
+                                                <mat-form-field appearance="fill">
+                                                    <input matInput
+                                                           ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01"
+                                                           (blur)="onHorizon(horizon,horizonsQuestionsType,'varCroma_1')"
+                                                           id="{{horizonsQuestionsType.name+' '+horizon.idRealm+' varCroma_1'}}"
+                                                           value="{{horizonsQuestionsType.values[horizon.idRealm]['answer']['value']['varCroma_1']}}"
+                                                           name="{{horizonsQuestionsType.name+' '+horizon.idRealm+' varCroma_1'}}">
+                                                    <mat-hint>Croma</mat-hint>
+                                                </mat-form-field>
+
+
+                                            </div>
+                                        </div>
+                                        <div fxLayout='row'
+                                             *ngIf="horizonsQuestionsType.values[horizon.idRealm]['answer']['value']['variegado']">
+                                            <div fxLayout="column" fxFlex.xs="33.33"
+                                                 fxFlex.sm="33.33" fxFlex.md="33.33" fxFlex.lg="33.33"
+                                                 fxFlex.xl="33.33">
+                                                <mat-form-field appearance="fill">
+                                                    <input matInput
+                                                           (blur)="onHorizon(horizon,horizonsQuestionsType,'varMatiz_2')"
+                                                           id="{{horizonsQuestionsType.name+' '+horizon.idRealm+' varMatiz_2'}}"
+                                                           value="{{horizonsQuestionsType.values[horizon.idRealm]['answer']['value']['varMatiz_2']}}"
+                                                           name="{{horizonsQuestionsType.name+' '+horizon.idRealm+' varMatiz_2'}}">
+                                                    <mat-hint>Matiz</mat-hint>
+                                                </mat-form-field>
+                                            </div>
+                                            <div fxLayout="column" fxFlex.xs="33.33"
+                                                 fxFlex.sm="33.33" fxFlex.md="33.33" fxFlex.lg="33.33"
+                                                 fxFlex.xl="33.33">
+
+                                                <mat-form-field appearance="fill">
+                                                    <input matInput
+                                                           type="number"
+                                                           ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01"
+                                                           (blur)="onHorizon(horizon,horizonsQuestionsType,'varMValue_2')"
+                                                           id="{{horizonsQuestionsType.name+' '+horizon.idRealm+' varMValue_2'}}"
+                                                           value="{{horizonsQuestionsType.values[horizon.idRealm]['answer']['value']['varMValue_2']}}"
+                                                           name="{{horizonsQuestionsType.name+' '+horizon.idRealm+' varMValue_2'}}">
+                                                    <mat-hint>Valor</mat-hint>
+                                                </mat-form-field>
+                                            </div>
+                                            <div fxLayout="column" fxFlex.xs="33.33"
+                                                 fxFlex.sm="33.33" fxFlex.md="33.33" fxFlex.lg="33.33"
+                                                 fxFlex.xl="33.33">
+
+                                                <mat-form-field appearance="fill">
+                                                    <input matInput
+                                                           type="number"
+                                                           ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01"
+                                                           (blur)="onHorizon(horizon,horizonsQuestionsType,'varCroma_2')"
+                                                           id="{{horizonsQuestionsType.name+' '+horizon.idRealm+' varCroma_2'}}"
+                                                           value="{{horizonsQuestionsType.values[horizon.idRealm]['answer']['value']['varCroma_2']}}"
+                                                           name="{{horizonsQuestionsType.name+' '+horizon.idRealm+' varCroma_2'}}">
+                                                    <mat-hint>Croma</mat-hint>
+                                                </mat-form-field>
+
+
+                                            </div>
+                                        </div>
+                                        <!-- Variegado -->
+
+
+                                        <!-- Mosqueado -->
+                                        <h5 class="mosqueado"
+                                            *ngIf="horizonsQuestionsType.values[horizon.idRealm]['answer']['value']['mosqueado']">
+                                            Mosqueado</h5>
+                                        <div fxLayout='row'
+                                             *ngIf="horizonsQuestionsType.values[horizon.idRealm]['answer']['value']['mosqueado']">
+                                            <div fxLayout="column" fxFlex.xs="33.33"
+                                                 fxFlex.sm="33.33" fxFlex.md="33.33" fxFlex.lg="33.33"
+                                                 fxFlex.xl="33.33">
+                                                <mat-form-field appearance="fill">
+                                                    <input matInput
+                                                           (blur)="onHorizon(horizon,horizonsQuestionsType,'mosMatiz')"
+                                                           id="{{horizonsQuestionsType.name+' '+horizon.idRealm+' mosMatiz'}}"
+                                                           value="{{horizonsQuestionsType.values[horizon.idRealm]['answer']['value']['mosMatiz']}}"
+                                                           name="{{horizonsQuestionsType.name+' '+horizon.idRealm+' mosMatiz'}}">
+                                                    <mat-hint>Matiz</mat-hint>
+                                                </mat-form-field>
+                                            </div>
+                                            <div fxLayout="column" fxFlex.xs="33.33"
+                                                 fxFlex.sm="33.33" fxFlex.md="33.33" fxFlex.lg="33.33"
+                                                 fxFlex.xl="33.33">
+
+                                                <mat-form-field appearance="fill">
+                                                    <input matInput
+                                                           type="number"
+                                                           ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01"
+                                                           (blur)="onHorizon(horizon,horizonsQuestionsType,'mosMValue')"
+                                                           id="{{horizonsQuestionsType.name+' '+horizon.idRealm+' mosMValue'}}"
+                                                           value="{{horizonsQuestionsType.values[horizon.idRealm]['answer']['value']['mosMValue']}}"
+                                                           name="{{horizonsQuestionsType.name+' '+horizon.idRealm+' mosMValue'}}">
+                                                    <mat-hint>Valor</mat-hint>
+                                                </mat-form-field>
+                                            </div>
+                                            <div fxLayout="column" fxFlex.xs="33.33"
+                                                 fxFlex.sm="33.33" fxFlex.md="33.33" fxFlex.lg="33.33"
+                                                 fxFlex.xl="33.33">
+                                                <mat-form-field appearance="fill">
+                                                    <input matInput
+                                                           type="number"
+                                                           ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01"
+                                                           (blur)="onHorizon(horizon,horizonsQuestionsType,'mosCroma')"
+                                                           id="{{horizonsQuestionsType.name+' '+horizon.idRealm+' mosCroma'}}"
+                                                           value="{{horizonsQuestionsType.values[horizon.idRealm]['answer']['value']['mosCroma']}}"
+                                                           name="{{horizonsQuestionsType.name+' '+horizon.idRealm+' mosCroma'}}">
+                                                    <mat-hint>Croma</mat-hint>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div fxLayout='row'
+                                             *ngIf="horizonsQuestionsType.values[horizon.idRealm]['answer']['value']['mosqueado']">
+                                            <div fxLayout="column" fxFlex.xs="33.33"
+                                                 fxFlex.sm="33.33" fxFlex.md="33.33" fxFlex.lg="33.33"
+                                                 fxFlex.xl="33.33">
+                                                <mat-form-field appearance="fill">
+                                                    <input matInput
+                                                           (blur)="onHorizon(horizon,horizonsQuestionsType,'mosMatiz_1')"
+                                                           id="{{horizonsQuestionsType.name+' '+horizon.idRealm+' mosMatiz_1'}}"
+                                                           value="{{horizonsQuestionsType.values[horizon.idRealm]['answer']['value']['mosMatiz_1']}}"
+                                                           name="{{horizonsQuestionsType.name+' '+horizon.idRealm+' mosMatiz_1'}}">
+                                                    <mat-hint>Matiz</mat-hint>
+                                                </mat-form-field>
+                                            </div>
+                                            <div fxLayout="column" fxFlex.xs="33.33"
+                                                 fxFlex.sm="33.33" fxFlex.md="33.33" fxFlex.lg="33.33"
+                                                 fxFlex.xl="33.33">
+
+                                                <mat-form-field appearance="fill">
+                                                    <input matInput
+                                                           type="number"
+                                                           ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01"
+                                                           (blur)="onHorizon(horizon,horizonsQuestionsType,'mosMValue_1')"
+                                                           id="{{horizonsQuestionsType.name+' '+horizon.idRealm+' mosMValue_1'}}"
+                                                           value="{{horizonsQuestionsType.values[horizon.idRealm]['answer']['value']['mosMValue_1']}}"
+                                                           name="{{horizonsQuestionsType.name+' '+horizon.idRealm+' mosMValue_1'}}">
+                                                    <mat-hint>Valor</mat-hint>
+                                                </mat-form-field>
+                                            </div>
+                                            <div fxLayout="column" fxFlex.xs="33.33"
+                                                 fxFlex.sm="33.33" fxFlex.md="33.33" fxFlex.lg="33.33"
+                                                 fxFlex.xl="33.33">
+                                                <mat-form-field appearance="fill">
+                                                    <input matInput
+                                                           type="number"
+                                                           ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01"
+                                                           (blur)="onHorizon(horizon,horizonsQuestionsType,'mosCroma_1')"
+                                                           id="{{horizonsQuestionsType.name+' '+horizon.idRealm+' mosCroma_1'}}"
+                                                           value="{{horizonsQuestionsType.values[horizon.idRealm]['answer']['value']['mosCroma_1']}}"
+                                                           name="{{horizonsQuestionsType.name+' '+horizon.idRealm+' mosCroma_1'}}">
+                                                    <mat-hint>Croma</mat-hint>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <!-- Mosqueado -->
+
+                                        <!--fim type 4 -->
+
+
+                                        <!-- Finaliza tipo 7 -->
+                                        <div class="mat-grid-list" *ngIf="horizonsQuestionsType.inputType === 7">
+                                            <mat-checkbox id="{{horizonsQuestionsType.name+' '+horizon.idRealm}}"
+                                                          *ngFor="let item of horizonsQuestionsType.items">{{item['label']}}</mat-checkbox>
+                                        </div>
+                                        <!-- Finaliza tipo 7 -->
+
+
+                                        <!-- Inicia tipo 8 -->
+
+                                        <div fxLayout='row'
+                                             *ngIf="horizonsQuestionsType.inputType === 8">
+                                            <div fxLayout="column" fxFlex.xs="100"
+                                                 fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+                                                <mat-checkbox
+                                                        disabled="{{horizon[horizonsQuestionsType.name]}}"
+                                                        [checked]="horizonsQuestionsType.values[horizon.idRealm]['answer']['value']['ondulado']"
+                                                        id="{{horizonsQuestionsType.type+' '+horizon.idRealm+' ondulado'}}"
+                                                        (change)="onMosqueadoVariegado($event,horizonsQuestionsType,horizon,'ondulado')"
+                                                >
+                                                    Ondulado
+                                                </mat-checkbox>
+
+                                            </div>
+                                        </div>
+
+
+                                        <mat-form-field appearance="fill"
+                                                        *ngIf="horizonsQuestionsType.inputType === 8 && !horizonsQuestionsType.values[horizon.idRealm]['answer']['value']['ondulado']">
+                                            <mat-label
+                                                    *ngIf="horizonsQuestionsType.metric">{{horizon.name + ' (' + horizonsQuestionsType.metric + ')'}}</mat-label>
+                                            <input matInput
+                                                   disabled="{{horizon[horizonsQuestionsType.name]}}"
+                                                   type="{{horizonsQuestionsType['keyboardType']}}" maxlength="5"
+                                                   step="0.01"
+                                                   (blur)="onHorizon(horizon,horizonsQuestionsType,'value')"
+                                                   id="{{horizonsQuestionsType.name+' '+horizon.idRealm +' value'}}"
+                                                   value="{{horizonsQuestionsType.values[horizon.idRealm]['answer']['value']['value']}}"
+                                                   name="{{horizonsQuestionsType.name+' '+horizon.idRealm+' value'}}">
+
+                                        </mat-form-field>
+
+                                        <div fxLayout='row'
+                                             *ngIf="horizonsQuestionsType.inputType === 8 && horizonsQuestionsType.values[horizon.idRealm]['answer']['value']['ondulado']">
+                                            <div fxLayout="column" fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50"
+                                                 fxFlex.lg="50" fxFlex.xl="50">
+
+                                                <mat-form-field appearance="fill">
+                                                    <input matInput
+                                                           type="number"
+                                                           ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01"
+                                                           (blur)="onHorizon(horizon,horizonsQuestionsType,'max')"
+                                                           id="{{horizonsQuestionsType.name+' '+horizon.idRealm+ ' max'}}"
+                                                           value="{{horizonsQuestionsType.values[horizon.idRealm]['answer']['value']['max']}}"
+                                                           name="{{horizonsQuestionsType.name+' '+horizon.idRealm+ ' max'}}">
+                                                    <mat-hint>Max</mat-hint>
+                                                </mat-form-field>
+
+                                            </div>
+                                            <div fxLayout="column" fxFlex.xs="50"
+                                                 fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+
+                                                <mat-form-field appearance="fill">
+                                                    <input matInput
+                                                           type="number"
+                                                           ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01"
+                                                           (blur)="onHorizon(horizon,horizonsQuestionsType,'min')"
+                                                           id="{{horizonsQuestionsType.name+' '+horizon.idRealm+ ' min'}}"
+                                                           value="{{horizonsQuestionsType.values[horizon.idRealm]['answer']['value']['min']}}"
+                                                           name="{{horizonsQuestionsType.name+' '+horizon.idRealm+ ' min'}}">
+                                                    <mat-hint>Min</mat-hint>
+                                                </mat-form-field>
+
+                                            </div>
+                                        </div>
+
+                                        <!-- Finaliza tipo 8 -->
+
+
+                                    </div>
+                                </div>
+                            </form>
+                        </mat-tab>
+                    </mat-tab-group>
+                </mat-tab>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <mat-icon class="example-tab-icon" svgIcon="cube-outline"></mat-icon>
+                        Fisica
+                    </ng-template>
+                    <mat-tab-group mat-align-tabs="center">
+                        <mat-tab *ngFor="let fisicsQuestions of fisicsQuestionsType"
+                                 label="{{fisicsQuestions.label}}">
+
+                            <div fxLayout='row'>
+                                <div *ngFor="let horizon of horizonslist" fxLayout="column" fxFlex.xs="50"
+                                     fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                                    <mat-checkbox *ngIf="fisicsQuestions.inputType === 4">Mosqueado</mat-checkbox>
+                                    <mat-checkbox *ngIf="fisicsQuestions.variegado">Variegado</mat-checkbox>
+                                    <mat-form-field class="full-wid" *ngIf="fisicsQuestions.inputType === 1">
+                                        <mat-label
+                                                *ngIf="fisicsQuestions.metric">{{horizon.name + ' (' + fisicsQuestions.metric + ')'}}</mat-label>
+                                        <mat-label
+                                                *ngIf="!fisicsQuestions.metric">{{horizon.name + ' ' + fisicsQuestions.editable}}</mat-label>
+                                        <input *ngIf="fisicsQuestions.editable" matInput
+                                               type="{{fisicsQuestions.keyboardType}}"
+                                               (blur)="onHorizon(horizon,fisicsQuestions)"
+                                               id="{{fisicsQuestions.name+' '+horizon.idRealm}}"
+                                               value="{{fisicsQuestions.values[horizon.idRealm]['answer'].value}}"
+                                               name="{{fisicsQuestions.name+' '+horizon.idRealm}}">
+
+                                        <input *ngIf="!fisicsQuestions.editable" matInput disabled
+                                               type="{{fisicsQuestions.keyboardType}}"
+                                               (blur)="onHorizon(horizon,fisicsQuestions)"
+                                               id="{{fisicsQuestions.name+' '+horizon.idRealm}}"
+                                               value="{{fisicsQuestions.values[horizon.idRealm]['answer'].value}}"
+                                               name="{{fisicsQuestions.name+' '+horizon.idRealm}}">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+
+                        </mat-tab>
+                    </mat-tab-group>
+
+                </mat-tab>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <mat-icon class="example-tab-icon" svgIcon="flask-outline"></mat-icon>
+                        Quimica
+                    </ng-template>
+
+                    <mat-tab-group mat-align-tabs="center">
+                        <mat-tab *ngFor="let chemistryQuestions of chemistryQuestionsType"
+                                 label="{{chemistryQuestions.label}}">
+                            <form>
+                                <div fxLayout='row'>
+                                    <div *ngFor="let horizon of horizonslist" fxLayout="column" fxFlex.xs="50"
+                                         fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                                        <mat-checkbox *ngIf="chemistryQuestions.inputType === 4">Mosqueado
+                                        </mat-checkbox>
+                                        <mat-checkbox *ngIf="chemistryQuestions.variegado">Variegado</mat-checkbox>
+
+                                        <mat-form-field class="full-wid" *ngIf="chemistryQuestions.inputType === 1">
+                                            <mat-label
+                                                    *ngIf="chemistryQuestions.metric">{{horizon.name + ' (' + chemistryQuestions.metric + ')'}}</mat-label>
+                                            <mat-label
+                                                    *ngIf="!chemistryQuestions.metric">{{horizon.name}}</mat-label>
+                                            <input *ngIf="chemistryQuestions.editable" matInput
+                                                   type="{{chemistryQuestions.keyboardType}}"
+                                                   (blur)="onHorizon(horizon,chemistryQuestions)"
+                                                   id="{{chemistryQuestions.name+' '+horizon.idRealm}}"
+                                                   value="{{chemistryQuestions.values[horizon.idRealm]['answer'].value}}"
+                                                   name="{{chemistryQuestions.name+' '+horizon.idRealm}}">
+                                            <input *ngIf="!chemistryQuestions.editable" matInput disabled
+                                                   type="{{chemistryQuestions.keyboardType}}"
+                                                   (blur)="onHorizon(horizon,chemistryQuestions)"
+                                                   id="{{chemistryQuestions.name+' '+horizon.idRealm}}"
+                                                   value="{{chemistryQuestions.values[horizon.idRealm]['answer'].value}}"
+                                                   name="{{chemistryQuestions.name+' '+horizon.idRealm}}">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </form>
+                        </mat-tab>
+                    </mat-tab-group>
+
+                </mat-tab>
+            </mat-tab-group>
+
+
+        </mat-tab>
+
+    </mat-tab-group>
+</mat-card>

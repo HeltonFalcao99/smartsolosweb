@@ -1,0 +1,53 @@
+<div class="user-manage-list" >
+   <mat-card>
+      <div fxLayout="row wrap" fxLayoutAlign="space-between">
+         <div fxLayout="row" fxLayoutAlign="start center">
+            <mat-form-field *ngIf="userlist && userlist.length>0">
+               <mat-label>Filter</mat-label>
+               <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium">
+            </mat-form-field>
+
+         </div>
+         <div class="mrgn-l-md mrgn-b-md add-user-btn" fxLayoutAlign="start center">
+            <mat-card-actions class="mat-pad-none margin-none">
+               <button mat-raised-button mat-button-sm color="primary" (click)="addNewUserDialog()">ADICIONAR USUARIO<mat-icon class="mrgn-l-md gene-text-xl">add</mat-icon></button>
+            </mat-card-actions>
+         </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="table-responsive" *ngIf="userlist && userlist.length>0">
+         <table class="full-wid" mat-table [dataSource]="dataSource">
+            <ng-container matColumnDef="name">
+               <th mat-header-cell *matHeaderCellDef>Nome</th>
+               <td mat-cell *matCellDef="let element"><div class="make-ellipse">{{element.name}} </div></td>
+            </ng-container>
+            <ng-container matColumnDef="login">
+               <th mat-header-cell *matHeaderCellDef>Login</th>
+               <td mat-cell *matCellDef="let element"><div class="make-ellipse">{{element.login}} </div></td>
+            </ng-container>
+
+                        <ng-container matColumnDef="action">
+               <th mat-header-cell *matHeaderCellDef>Ações</th>
+               <td mat-cell *matCellDef="let element;let i = index;">
+                  <button mat-icon-button>
+                     <mat-icon class="mat-icon-grey gene-text-lg" (click)="onEdit(element, i)">edit</mat-icon>
+                  </button>
+                   <button mat-icon-button (click)="onDelete(i)">
+                     <mat-icon class="mat-icon-grey gene-text-lg">delete</mat-icon>
+                  </button>
+               </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"
+               (click)="selection.toggle(row)"></tr>
+         </table>
+      </div>   
+      <div class="pagination" *ngIf="userlist && userlist.length>0">
+         <mat-paginator [length]="userlist.length"
+           [pageSize]="10"
+           [pageSizeOptions]="[5, 10, 25, 100]">
+         </mat-paginator>
+      </div>
+   </mat-card>
+</div>   

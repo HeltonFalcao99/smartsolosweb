@@ -1,0 +1,24 @@
+<form [formGroup]="addNewProjectForm" class="popup-card-width add-new-user">
+	<div>
+		<h2 mat-dialog-title>Projeto</h2>
+	</div>	
+	<mat-dialog-content>
+		<div>
+			<div>
+				<mat-form-field class="mrgn-b-sm">
+					<input matInput type="text" formControlName="projectName" class="form-control" placeholder="Nome">
+					<mat-error *ngIf="addNewProjectForm.controls['projectName'].touched && !addNewProjectForm.controls['projectName'].valid">
+						<mat-error *ngIf="addNewProjectForm.controls['projectName'].hasError('required')" class="required alert-error">
+							Campo Nome Obrigatório.
+						</mat-error>
+		         </mat-error>
+				</mat-form-field>
+
+			</div>
+      </div>
+	</mat-dialog-content>
+	<mat-dialog-actions class="mrgn-b-xs pad-b-none">
+		<button type="button" mat-raised-button (click)="dialogRef.close()" color="primary">FECHAR</button>
+		<button (click)="onFormSubmit()" type="submit" [disabled]="!addNewProjectForm.valid" mat-raised-button color="warn">SALVAR</button>
+	</mat-dialog-actions>
+</form>

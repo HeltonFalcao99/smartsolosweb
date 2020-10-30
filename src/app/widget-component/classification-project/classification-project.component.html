@@ -1,0 +1,18 @@
+<form>
+	<div>
+		<h2 mat-dialog-title>{{data.name}}</h2>
+	</div>
+	<div>
+		<p><strong>Ponto:</strong> {{data.id_ponto}}</p>
+		<p><strong>Ordem:</strong> {{data.ordem}}</p>
+		<p><strong>Subdordem:</strong> {{data.subOrdem}}</p>
+		<p><strong>GDE Grupo:</strong> {{data.gdeGrupo}}</p>
+		<p><strong>Subgrupo:</strong> {{data.subgrupo}}</p>
+
+	</div>
+	<div>
+		<mat-dialog-actions align="right">
+			<button mat-raised-button type="button" (click)="dialogRef.close()" color="primary">OK</button>
+		</mat-dialog-actions>
+	</div>
+</form>

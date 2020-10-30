@@ -1,0 +1,57 @@
+.mat-tab-group {
+  margin-bottom: 48px;
+}
+
+
+
+.example-additional-selection {
+  opacity: 0.75;
+  font-size: 0.75em;
+}
+
+
+.btnHorizonte{
+  place-content: center;
+}
+
+.body-horizon{
+  padding: 5px;
+  height: 445px !important;
+  background: #CFD8DC;
+}
+.item-horizon{
+  margin-bottom: 10px;
+}
+
+.text-horizon{
+  padding-top: 4px;
+  width: -webkit-fill-available;
+  cursor: pointer;
+  margin-top: 10px !important;
+}
+.mat-icon-button{
+  padding-top: 9px !important;
+}
+
+
+.cont-button {
+  margin-top: 5px!important;
+  display: flex !important;
+  justify-content: space-between !important;
+  width: 26% !important;
+}
+
+.cont-top{
+  background: #ffffff;
+  width: 100%;
+}
+
+.cont-body{
+  background: #ffffff;
+  width: 100%;
+}
+
+.cont-horizon{
+  color: #ffffff;
+  justify-content: space-between !important;
+}

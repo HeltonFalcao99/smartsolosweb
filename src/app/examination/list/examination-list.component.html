@@ -1,0 +1,105 @@
+<div class="user-manage-list">
+    <mat-card>
+        <div fxLayout="row wrap" fxLayoutAlign="space-between">
+            <div fxLayout="row" fxLayoutAlign="start center">
+                <!--            <div class="mrgn-r-sm">-->
+                <!--               <mat-icon class="mat-icon-grey cursor-pointer">loop</mat-icon>-->
+                <!--            </div>-->
+                <!--            <div class="mrgn-l-sm mrgn-r-sm">-->
+                <!--               <mat-form-field>-->
+                <!--                  <mat-select placeholder="More">-->
+                <!--                     <mat-option value="All">All</mat-option>-->
+                <!--                     <mat-option value="Remove">Remove</mat-option>-->
+                <!--                     <mat-option value="Edit">Edit</mat-option>-->
+                <!--                     <mat-option value="Recently">Recently</mat-option>-->
+                <!--                  </mat-select>-->
+                <!--               </mat-form-field>-->
+                <!--            </div>-->
+            </div>
+            <div class="mrgn-l-md mrgn-b-md add-user-btn" fxLayoutAlign="start center">
+                <mat-card-actions class="mat-pad-none margin-none">
+                    <button mat-raised-button mat-button-sm color="primary" (click)="addNewExaminationDialog()">
+                        ADICIONAR EXAME
+                        <mat-icon class="mrgn-l-md gene-text-xl">add</mat-icon>
+                    </button>
+                </mat-card-actions>
+            </div>
+        </div>
+        <mat-divider></mat-divider>
+
+        <div class="table-responsive" *ngIf="examinationlist && examinationlist.length>0">
+            <table class="full-wid" mat-table [dataSource]="dataSource">
+                <!--            <ng-container matColumnDef="code">-->
+                <!--               <th mat-header-cell *matHeaderCellDef>Codígo</th>-->
+                <!--               <td mat-cell *matCellDef="let element">-->
+                <!--                  <div fxLayoutAlign="start center">-->
+                <!--                     <div class="mrgn-r-sm user-list-image">-->
+                <!--                        <img class="img-circle"  height="50" width="50">-->
+                <!--                     </div>-->
+                <!--                     <div>-->
+                <!--                        <h5 class="mrgn-b-xs">{{element.code}}</h5>-->
+                <!--                     </div>-->
+                <!--                  </div>-->
+                <!--               </td>-->
+                <!--            </ng-container>-->
+                <!--            <ng-container matColumnDef="name">-->
+                <!--               <th mat-header-cell *matHeaderCellDef>Nome</th>-->
+                <!--               <td mat-cell *matCellDef="let element">-->
+                <!--                  <div fxLayoutAlign="start center">-->
+                <!--                     <div class="mrgn-r-sm user-list-image">-->
+                <!--                        <img class="img-circle"  height="50" width="50">-->
+                <!--                     </div>-->
+                <!--                     <div>-->
+                <!--                        <h5 class="mrgn-b-xs">{{element.name}}</h5>-->
+                <!--                     </div>-->
+                <!--                  </div>-->
+                <!--               </td>-->
+                <!--            </ng-container>-->
+
+                <!--            <ng-container matColumnDef="code">-->
+                <!--               <th mat-header-cell *matHeaderCellDef>Codígo</th>-->
+                <!--               <td mat-cell *matCellDef="let element"><div class="make-ellipse">{{element.code}} </div></td>-->
+                <!--            </ng-container>-->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef>Codígo</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="make-ellipse">{{element.name}} </div>
+                    </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef>Ações</th>
+                    <td mat-cell *matCellDef="let element;let i = index;">
+                        <button mat-icon-button>
+                            <mat-icon class="mat-icon-grey gene-text-lg" (click)="onEdit(element, i)">edit</mat-icon>
+                        </button>
+                        <button mat-icon-button (click)="onQuestion(element, i)">
+                            <mat-icon class="mat-icon-grey gene-text-lg">remove_red_eye</mat-icon>
+                        </button>
+                        <button mat-icon-button (click)="onDelete(i)">
+                            <mat-icon class="mat-icon-grey gene-text-lg">delete</mat-icon>
+                        </button>
+                        <button mat-icon-button>
+                            <mat-icon class="mat-icon-grey gene-text-lg" (click)="onSend()">cloud_upload</mat-icon>
+                        </button>
+                        <button mat-icon-button>
+                            <mat-icon class="mat-icon-grey gene-text-lg" (click)="sendClassification(element, i)">list
+                            </mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"
+                    (click)="selection.toggle(row)"></tr>
+            </table>
+        </div>
+        <div class="pagination" *ngIf="examinationlist && examinationlist.length>0">
+            <mat-paginator [length]="examinationlist.length"
+                           [pageSize]="10"
+                           [pageSizeOptions]="[5, 10, 25, 100]">
+            </mat-paginator>
+        </div>
+    </mat-card>
+</div>   

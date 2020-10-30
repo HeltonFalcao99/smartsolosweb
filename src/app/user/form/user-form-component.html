@@ -1,0 +1,84 @@
+<div fxLayout="row wrap" fxLayoutAlign=" start" class="gene-form-wizard">
+   <mat-card fxFlex="100%">
+      <div class="gene-card-title">
+         <div fxLayout="row" fxLayoutAlign="start center">
+            <div fxLayout="column">
+               <h4>{{'Usuario'}}</h4>
+            </div> <span fxFlex></span>
+         </div>
+         <mat-divider></mat-divider>
+      </div>
+      <div class="gene-card-content">
+         <form [formGroup]="form">
+            <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+               <div fxFlex.gt-sm="49" fxFlex.gt-xs="49" fxFlex="100">
+                  <mat-form-field class="full-wid mrgn-b-md">
+                     <input matInput placeholder="Nome" formControlName="name">
+                  </mat-form-field>
+                  <small class="gene-block" *ngIf="form.controls['name'].hasError('required') && form.controls['name'].touched"
+                     class="warn-text">
+                     Infome seu nome.
+                  </small>
+               </div>
+               <div fxFlex.gt-sm="49" fxFlex.gt-xs="49" fxFlex="100">
+                  <mat-form-field class="full-wid mrgn-b-md">
+                     <input matInput placeholder="Email address" formControlName="email" type="email">
+                  </mat-form-field>
+               </div>
+            </div>
+            <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+               <div fxFlex.gt-sm="49" fxFlex.gt-xs="49" fxFlex="100">
+                  <mat-form-field class="full-wid mrgn-b-md">
+                     <input matInput placeholder="Login" formControlName="login">
+                  </mat-form-field>
+                  <small class="gene-block" *ngIf="form.controls['login'].hasError('required') && form.controls['login'].touched"
+                         class="warn-text">
+                     Informe meu login.
+                  </small>
+               </div>
+               <div fxFlex.gt-sm="49" fxFlex.gt-xs="49" fxFlex="100">
+                  <mat-form-field class="full-wid mrgn-b-md">
+                     <input matInput placeholder="Senha" formControlName="password" type="password">
+                  </mat-form-field>
+                  <small class="gene-block" *ngIf="this.idUser == 0 && form.controls['password'].hasError('required') && form.controls['password'].touched"
+                     class="warn-text">
+                     Informe sua senha.
+                  </small>
+               </div>
+            </div>
+            <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+               <div fxFlex.gt-sm="49" fxFlex.gt-xs="49" fxFlex="100">
+                  <mat-form-field class="full-wid mrgn-b-md">
+                     <input matInput placeholder="Confirmar senha" formControlName="confirmPassword" type="password">
+                  </mat-form-field>
+                  <small class="gene-block" *ngIf="this.idUser == 0 && form.controls['confirmPassword'].hasError('required') && form.controls['confirmPassword'].touched"
+                     class="warn-text">
+                     Você deve incluir a senha de confirmação.
+                  </small>
+                  <small class="gene-block" *ngIf="this.idUser == 0 && form.controls['confirmPassword'].errors && (form.controls['confirmPassword'].hasError('required'))"
+                     class="warn-text">
+                     As senhas não coincidem.
+                  </small>
+               </div>
+
+               <div fxFlex.gt-sm="49" fxFlex.gt-xs="49" fxFlex="100">
+
+                  <mat-form-field>
+                     <mat-select placeholder="Perfil" formControlName="profile" >
+                        <mat-option *ngFor="let p of listProfiles" [value]="p.id">
+                           {{p.name}}
+                        </mat-option>
+                     </mat-select>
+                  </mat-form-field>
+
+               </div>
+            </div>
+            <div class="pad-wrap">
+               <mat-card-actions>
+                  <button (click)="onFormSubmit()" [disabled]="!form.valid" mat-raised-button color="primary"  type="submit"  >Salvar</button>
+               </mat-card-actions>
+            </div>
+         </form>
+      </div>
+   </mat-card>
+</div>

@@ -1,0 +1,72 @@
+<div class="sidebar-panel gene-sidenav" fxLayout="column">
+<!--    <mat-toolbar class="sidebar-logo">-->
+<!--        <div class="gene-logo">-->
+<!--            <div class="gene-user-thumb text-center">-->
+<!--                <img class="img-responsive img-circle" src="assets/img/pro-thumb.jpg" width="107" height="107" alt="user list image">-->
+<!--                <div class="gene-user-name">{{getName()}}</div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </mat-toolbar>-->
+    <perfect-scrollbar>
+        <div class="sidebar-container">
+            <div class="gene-user-thumb">
+                <mat-icon svgIcon="account-box" class="icon-user"  aria-label="Usuario"></mat-icon>
+                <div class="gene-user-name">{{getName()}}</div>
+            </div>
+            <div class="sidenav-scrollbar-container" fxLayout="column">
+                <ng-container>
+                    <mat-nav-list fxLayout="column" menuToggleDirective class="navigation">
+                        <mat-list-item menuToggleLink *ngFor="let menuitem of menuList.getAll()">
+                            <a menuToggle class="gene-relative" mat-ripple [routerLink]="['/', menuitem.state]"
+                               routerLinkActive="active-link" *ngIf="menuitem.type === 'link'">
+                                <mat-icon>{{ menuitem.icon }}</mat-icon>
+                                <span>{{ menuitem.name }}</span>
+                                <ng-container *ngIf="menuitem.label">
+                                    <span class="sidebar-label">{{ menuitem.label}}</span>
+                                </ng-container>
+                            </a>
+                            <span></span>
+                            <a menuToggle class="gene-relative" mat-ripple href="javascript:void(0)"
+                               *ngIf="menuitem.type === 'sub'">
+                                <mat-icon>{{ menuitem.icon }}</mat-icon>
+                                <span>{{ menuitem.name  }}</span>
+                                <ng-container *ngIf="menuitem.label">
+                                    <span class="sidebar-label">{{ menuitem.label}}</span>
+                                </ng-container>
+                                <span fxFlex></span>
+                                <mat-icon class="menu-caret">chevron_right</mat-icon>
+                            </a>
+                            <mat-nav-list class="sub-menu" *ngIf="menuitem.type === 'sub'">
+                                <mat-list-item *ngFor="let childitem of menuitem.children" routerLinkActive="open">
+                                    <a [routerLink]="['/'+menuitem.state+'/'+childitem.state ]"
+                                       routerLinkActive="active-link" class="gene-relative" mat-ripple>
+                                        {{ childitem.name  }}
+                                        <ng-container *ngIf="childitem.label">
+                                            <span class="sidebar-label">{{childitem.label}}</span>
+                                        </ng-container>
+                                    </a>
+                                </mat-list-item>
+                            </mat-nav-list>
+                        </mat-list-item>
+
+                        <mat-list-item>
+                            <a (click)="help()">
+                                <mat-icon>class</mat-icon>
+                                <span>Tutorial</span>
+                            </a>
+                        </mat-list-item>
+
+                        <mat-divider></mat-divider>
+
+                        <mat-list-item>
+                            <a (click)="logout()">
+                                <mat-icon>logout</mat-icon>
+                                <span>Logout</span>
+                            </a>
+                        </mat-list-item>
+                    </mat-nav-list>
+                </ng-container>
+            </div>
+        </div>
+    </perfect-scrollbar>
+</div>

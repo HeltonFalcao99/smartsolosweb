@@ -1,0 +1,47 @@
+<button mat-button mat-button-sm class="btn-back" (click)="onBack()">
+    <mat-icon class="img-svg-sm" svgIcon="arrow-left"></mat-icon>
+    Voltar
+</button>
+
+
+<mat-card>
+    <mat-tab-group headerPosition="below" mat-align-tabs="center">
+        <mat-tab label="Descrição Geral">
+            <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon" svgIcon="format-list-checkbox"></mat-icon>
+            </ng-template>
+            <ms-desifnacao-form></ms-desifnacao-form>
+        </mat-tab>
+        <mat-tab label="Análise Morfológica">
+
+            <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon" svgIcon="layers-triple"></mat-icon>
+            </ng-template>
+
+
+
+                        <mat-card-actions class="mat-pad-none margin-none">
+                            <button mat-button (click)="addNewHorizon(horizonlist.length - 1)" class="btnHorizonte">Adicionar um
+                                novo horizonte
+                                <mat-icon class="mrgn-l-md gene-text-xl">add</mat-icon>
+                            </button>
+                        </mat-card-actions>
+
+                        <div class="body-horizon">
+                            <div class="item-horizon" *ngFor="let horizon of horizonlist">
+
+                                <div fxLayoutAlign="start none" style="background: #ffffff; height: 50px;">
+                                </div>
+                                <div fxLayoutAlign="start none" style="background: #9e9e9e" class="cont-horizon">
+                                    <a class="text-horizon" (click)="addNewHorizonForm()">{{horizon.name}}</a>
+                                    <button mat-icon-button (click)="onDelete(horizon)">
+                                        <mat-icon inline=true svgIcon="delete"></mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+
+        </mat-tab>
+    </mat-tab-group>
+</mat-card>

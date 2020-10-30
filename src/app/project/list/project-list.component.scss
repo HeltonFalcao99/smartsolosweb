@@ -1,0 +1,93 @@
+.title-project{
+  background-color: #009688 !important;
+  color: #fff !important;
+}
+
+.body-exams{
+  height: 60px !important;
+}
+
+.text-exams{
+  padding-top: 20px;
+  height: 60px !important;
+  width: -webkit-fill-available;
+  cursor: pointer;
+  margin-top: 10px !important;
+}
+
+
+.cont-button {
+  margin-top: 5px!important;
+  display: flex !important;
+  justify-content: space-between !important;
+  width: 26% !important;
+}
+//.mat-icon-button{ line-height: 15px !important;}
+
+.mat-button-wrapper, .mat-icon-button{
+  display: flex !important;
+  flex-direction: column !important;
+  border-radius: 0 !important;
+
+}
+
+
+.buttonMenu {
+
+  line-height: 30px !important;
+  color: #f8f8f8 !important;
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+}
+
+.rename{
+  background: #0F50FA;
+}
+.send{
+  background: #43A047;
+}
+
+.delete{
+  background: #ff0000;
+}
+
+.classif{
+  background: #9c9fad;
+}
+
+
+.icon-opcao{
+  padding: 10px !important;
+  min-width: 56px !important;
+}
+.buttonMenu .tmenu{
+  position: absolute;
+  font-size: 0.7em;
+  font-weight: bold;
+  bottom: -3px;
+  left: 5px;
+}
+
+.tcenter{
+  padding-left: 4px;
+}
+.buttonEnd{
+  min-width: 69px !important;
+}
+
+
+@media (min-width: 992px) {
+  .buttonMenu .tmenu{
+    left: 7px;
+  }
+}
+@media (min-width: 1367px) {
+  .buttonMenu .tmenu{
+    left: 8px;
+  }
+}
+.buttonMenu .mat-icon {
+  position: relative;
+  top: -10px;
+}

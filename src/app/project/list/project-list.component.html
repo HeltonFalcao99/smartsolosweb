@@ -1,0 +1,34 @@
+<mat-card *ngIf="getProjects().length > 0">
+    <div *ngFor="let p of getProjects()">
+        <div fxLayout="row" fxLayoutAlign="space-between center" class="title-project">
+            <h3>{{p.name}}</h3>
+            <button mat-icon-button (click)="addNewExaminationDialog(p)">
+                <mat-icon class="gene-text-lg">
+                    add_circle_outline
+                </mat-icon>
+            </button>
+        </div>
+        <div fxLayout="row" class="body-exams" *ngFor="let e of p.exams" fxLayoutAlign="space-between center">
+            <h4 class="text-exams" (click)="onQuestion(e)" >{{e.name}}</h4>
+            <div class="cont-button">
+
+                <button class="buttonMenu icon-opcao rename" mat-icon-button (click)="onEditExams(e)">
+                    <mat-icon inline=true svgIcon="rename-box"></mat-icon>
+                    <span class="tmenu">Renomear</span>
+                </button>
+                <button class="buttonMenu icon-opcao delete" mat-icon-button (click)="onDelete(p,e)">
+                    <mat-icon svgIcon="delete"></mat-icon>
+                    <span class="tmenu tcenter">Apagar</span>
+                </button>
+                <button class="buttonMenu icon-opcao send" mat-icon-button (click)="onSend(p,e)">
+                    <mat-icon svgIcon="cloud-upload"></mat-icon>
+                    <span class="tmenu tcenter">Enviar</span>
+                </button>
+                <button class="buttonMenu icon-opcao classif" mat-icon-button (click)="sendClassification(e)">
+                    <mat-icon svgIcon="format-list-bulleted-square"></mat-icon>
+                    <span class="tmenu tcenter">Classif.</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</mat-card>

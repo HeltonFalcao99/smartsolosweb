@@ -1,0 +1,26 @@
+<div class="gene-login gene-session pad-y-xl">
+   <div fxLayout="row" fxLayoutAlign="center start">
+      <div fxLayout="column" fxFlex.xl="540px" fxFlex.lg="540px" fxFlex.md="540px" fxFlex.sm="540px" fxFlex.xs="100">
+         <mat-card class="gene-login-wrapper">
+            <div>
+               <div fxLayout="column" fxLayoutAlign="center center mrgn-b-md">
+                  <div class="login-logo justify-content">
+                     <img src="assets/img/login.jpg">
+                  </div>
+               </div>
+               <form #form="ngForm" (ngSubmit)="access(form.value)">
+               <div fxLayout="column" fxLayoutAlign="start stretch">
+                  <mat-form-field class="full-wid mrgn-b-md">
+                     <input matInput placeholder="Login" type="text" name="login" required [(ngModel)]="login">
+                  </mat-form-field>
+                  <mat-form-field class="full-wid mrgn-b-md ">
+                     <input matInput placeholder="Senha" type="password" name="password" required [(ngModel)]="password">
+                  </mat-form-field>
+                  <button class="success-bg" mat-raised-button [disabled]="!form.valid">ENTRAR</button>
+               </div>
+               </form>
+            </div>
+         </mat-card>
+      </div>
+   </div>
+</div>

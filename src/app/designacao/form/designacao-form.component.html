@@ -1,0 +1,176 @@
+<div class="pad-t-md pad-b-md">
+    <form>
+        <div fxLayout='row wrap' class="pad-t-lg pad-b-md">
+            <div class="mrgn-b-md" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100"
+                 fxFlex.xl="100">
+                <div fxLayout='row wrap'>
+
+                    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+                        <mat-form-field>
+                            <input matInput [matDatepicker]="dateInput" id="{{this.codeExamination+'-Date'}}"
+                                   (dateChange)="onGeneralQuestionsTypeSave(this.generalQuestionsType.Date,'Date')"
+                                   [(ngModel)]="date"
+                                   name="Date" placeholder="Data do exame">
+                            <mat-datepicker-toggle matSuffix [for]="dateInput"></mat-datepicker-toggle>
+                            <mat-datepicker #dateInput></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+                        <mat-form-field>
+                            <mat-select placeholder="Tipo do exame" id="{{this.codeExamination+'-SoilProfile'}}"
+                                        (selectionChange)="onGeneralQuestionsTypeSave(this.generalQuestionsType.SoilProfile,'SoilProfile')"
+                                        [(ngModel)]="soilProfile" name="SoilProfile">
+                                <mat-option *ngFor="let soilProfileOption of soilProfileOptions"
+                                            [value]="soilProfileOption.value">
+                                    {{soilProfileOption.label}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                        <mat-form-field class="full-wid">
+                            <input matInput placeholder="Coordenadas UTM" disabled
+                                   id="{{this.codeExamination+'-Coordinates'}}"
+                                   (change)="onGeneralQuestionsTypeSave(this.generalQuestionsType.Coordinates,'Coordinates')"
+                                   name="Coordinates" [(ngModel)]="coordinates">
+                            <button mat-icon-button matSuffix [attr.aria-label]="'Hide password'"
+                                    (click)="onMaps()">
+                                <mat-icon>map</mat-icon>
+                            </button>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100"
+                         fxFlex.xl="100">
+                        <mat-form-field class="full-wid pad-r-md mrgn-b-xs">
+                            <input matInput type="number" placeholder="Altitude"
+                                   id="{{this.codeExamination+'-Elevation'}}"
+                                   (blur)="onGeneralQuestionsTypeSave(this.generalQuestionsType.Elevation,'Elevation')"
+                                   name="altitude"
+                                   [(ngModel)]="elevation">
+                            <!--                                           ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01"-->
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100"
+                         fxFlex.xl="100">
+                        <mat-form-field class="full-wid">
+                                            <textarea matInput placeholder="Situação e declividade" type="text"
+                                                      id="{{this.codeExamination+'-SlopeSituation'}}"
+                                                      name="SlopeSituation"
+                                                      (blur)="onGeneralQuestionsTypeSave(this.generalQuestionsType.SlopeSituation,'SlopeSituation')"
+                                                      [(ngModel)]="slopeSituation"></textarea>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100"
+                         fxFlex.xl="100">
+                        <mat-form-field class="full-wid">
+                                            <textarea matInput placeholder="Litologia e cronologia" name="Lithology"
+                                                      id="{{this.codeExamination+'-Lithology'}}"
+                                                      (blur)="onGeneralQuestionsTypeSave(this.generalQuestionsType.Lithology,'Lithology')"
+                                                      [(ngModel)]="lithology"></textarea>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100"
+                         fxFlex.xl="100">
+                        <mat-form-field class="full-wid">
+                                            <textarea matInput placeholder="Material de origem" name="SourceMaterial"
+                                                      id="{{this.codeExamination+'-SourceMaterial'}}"
+                                                      (blur)="onGeneralQuestionsTypeSave(this.generalQuestionsType.SourceMaterial,'SourceMaterial')"
+                                                      [(ngModel)]="sourceMaterial"></textarea>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+                        <mat-form-field>
+                            <mat-select placeholder="Pedregosidade" id="{{this.codeExamination+'-Stony'}}"
+                                        [(ngModel)]="stony" name="stony"
+                                        (selectionChange)="onGeneralQuestionsTypeSave(this.generalQuestionsType.Stony,'Stony')">
+                                <mat-option *ngFor="let stonyOption of stonyOptions['items']"
+                                            [value]="stonyOption.value">{{stonyOption.label}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+                        <mat-form-field>
+                            <mat-select placeholder="Rochosidade" [(ngModel)]="rockiness"
+                                        id="{{this.codeExamination+'-Rockiness'}}"
+                                        (selectionChange)="onGeneralQuestionsTypeSave(this.generalQuestionsType.Rockiness,'Rockiness')"
+                                        name="rockiness">
+                                <mat-option *ngFor="let rockinessOption of rockinessOptions"
+                                            [value]="rockinessOption.value">
+                                    {{rockinessOption.label}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+                        <mat-form-field>
+                            <mat-label>Relevo Local</mat-label>
+                            <mat-select [(ngModel)]="localRelief" id="{{this.codeExamination+'-LocalRelief'}}"
+                                        (selectionChange)="onGeneralQuestionsTypeSave(this.generalQuestionsType.LocalRelief,'LocalRelief')"
+                                        name="localRelief">
+                                <mat-option *ngFor="let localReliefOption of localReliefOptions"
+                                            [value]="localReliefOption.value">
+                                    {{localReliefOption.label}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+                        <mat-form-field>
+                            <mat-label>Relevo Regional</mat-label>
+                            <mat-select [(ngModel)]="regionalRelief" multiple
+                                        id="{{this.codeExamination+'-RegionalRelief'}}"
+                                        (selectionChange)="onGeneralQuestionsTypeSave(this.generalQuestionsType.RegionalRelief,'RegionalRelief')"
+                                        name="regionalRelief">
+                                <mat-option *ngFor="let regional of regionalReliefs['items'][0]['children']"
+                                            [value]="regional.id">{{regional.name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+                        <mat-form-field>
+                            <mat-label>Erosão</mat-label>
+                            <mat-select [(ngModel)]="erosion" multiple
+                                        id="{{this.codeExamination+'-Erosion'}}"
+                                        (selectionChange)="onGeneralQuestionsTypeSave(this.generalQuestionsType.Erosion,'Erosion')"
+                                        name="erosion">
+                                <h4>{{erosions['placeholder']}}</h4>
+                                <mat-optgroup *ngFor="let group of erosions['items']" [label]="group.name">
+                                    <mat-option *ngFor="let child of group.children"
+                                                [value]="child.id"> {{child.name}}</mat-option>
+                                </mat-optgroup>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+                        <mat-form-field>
+                            <mat-select placeholder="Drenagem" [(ngModel)]="drainage" name="drainage"
+                                        id="{{this.codeExamination+'-Drainage'}}"
+                                        (selectionChange)="onGeneralQuestionsTypeSave(this.generalQuestionsType.Date,'Drainage')">
+                                <mat-option *ngFor="let drainage of drainages['items']"
+                                            [value]="drainage.value"> {{drainage.label}} </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+
+                    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100"
+                         fxFlex.xl="100">
+                        <mat-form-field class="full-wid">
+                                            <textarea matInput placeholder="Descrito e coletado por:" name="Author"
+                                                      (blur)="onGeneralQuestionsTypeSave(this.generalQuestionsType.Author,'Author')"
+                                                      id="{{this.codeExamination+'-Author'}}"
+                                                      [(ngModel)]="author"></textarea>
+                        </mat-form-field>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>

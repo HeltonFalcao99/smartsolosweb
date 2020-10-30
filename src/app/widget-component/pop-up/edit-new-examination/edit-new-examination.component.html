@@ -1,0 +1,19 @@
+<form [formGroup]="form" (ngSubmit)="onFormSubmit()">
+	<div>
+		<h2 mat-dialog-title>Exame</h2>
+	</div>	
+	<div>
+		<mat-dialog-content>
+			<mat-form-field class="full-wid">
+				<label>Nome</label>
+				<input matInput  formControlName="examinationName" type="text">
+			</mat-form-field> 
+		</mat-dialog-content>
+	</div>	
+	<div>
+		<mat-dialog-actions align="right">
+			<button mat-raised-button type="button" (click)="dialogRef.close()" color="primary">CANCELAR</button>
+			<button mat-raised-button type="submit" color="warn">ATUALIZAR</button>
+		</mat-dialog-actions>
+	</div>	
+</form>
